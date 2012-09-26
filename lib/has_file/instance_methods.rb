@@ -13,11 +13,16 @@ module HasFile
     end
 
     def retrieve_file(name)
-      # TODO: Is there a way to do this w/out writing a temp file?
+      if has_file(name)
+        reader, writer = IO.pipe
+        writer.write self.send("#{name}_file")
+        writer.close
+        reader
+      end
     end
 
     def has_file?(name)
-      # TODO
+      !self.send("#{name}_file").nil?
     end
   end
 end
