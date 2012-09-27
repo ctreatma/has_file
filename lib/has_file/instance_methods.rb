@@ -13,7 +13,7 @@ module HasFile
     end
 
     def retrieve_file(name)
-      if has_file(name)
+      if has_file?(name)
         reader, writer = IO.pipe
         writer.write self.send("#{name}_file")
         writer.close
